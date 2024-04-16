@@ -1,0 +1,27 @@
+{% extends 'back/back.html.twig' %}
+
+{% block body %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title">Edit Type</h1>
+                </div>
+                <div class="card-body">
+                    {{ include('type/_form.html.twig', {'button_label': 'Update'}) }}
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('app_type_index') }}" class="btn btn-secondary">Back to list</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

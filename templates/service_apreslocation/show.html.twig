@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ServiceAprèsLocation{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>ServiceAprèsLocation</h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Idservice</th>
+                    <td>{{ service_apreslocation.idservice }}</td>
+                </tr>
+                <tr>
+                    <th>Type</th>
+                    <td>{{ service_apreslocation.type }}</td>
+                </tr>
+                <tr>
+                    <th>Technicien</th>
+                    <td>{{ service_apreslocation.technicien }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ service_apreslocation.description }}</td>
+                </tr>
+                <tr>
+                    <th>Statut</th>
+                    <td>{{ service_apreslocation.statut }}</td>
+                </tr>
+                <tr>
+                    <th>Cout</th>
+                    <td>{{ service_apreslocation.cout }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_service_apreslocation_index') }}" class="btn btn-primary">Back to list</a>
+
+        <a href="{{ path('app_service_apreslocation_edit', {'idservice': service_apreslocation.idservice}) }}" class="btn btn-warning">Edit</a>
+
+        {{ include('service_apreslocation/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

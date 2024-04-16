@@ -1,0 +1,35 @@
+{% extends 'back/back.html.twig' %}
+
+{% block body %}
+<div style="float: right; width: 70%;"> <!-- Adjust width as needed -->
+    <br></br>
+<br></br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>TypeName</th>
+                <th>Actions</th> <!-- Corrected typo -->
+            </tr>
+        </thead>
+        <tbody>
+        {% for type in types %}
+            <tr>
+                <td>{{ type.id }}</td>
+                <td>{{ type.typeName }}</td>
+                <td>
+                    <a href="{{ path('app_type_edit', {'id': type.id}) }}">Edit</a> <!-- Corrected capitalization -->
+                      <a href="{{ path('app_type_delete', {'id': type.id}) }}">Delete</a> <!-- Corrected capitalization -->
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">No records found</td> <!-- Corrected typo -->
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_new') }}">Create new</a>
+</div>
+{% endblock %}

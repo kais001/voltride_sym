@@ -1,0 +1,54 @@
+{% extends 'back/back.html.twig' %}
+
+{% block body %}
+<br>
+<br>
+<br>
+<br>
+<br>
+
+    <h1 style="margin-left: 550px;">Liste des Services Après Location</h1> <!-- Ajoutez le style ici -->
+
+    <table class="table table-striped" style="margin-left: 280px;">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Technicien</th>
+                <th>Description</th>
+                <th>Statut</th>
+                <th>Coût</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for service_apreslocation in service_apreslocations %}
+            <tr>
+                <td>{{ service_apreslocation.idservice }}</td>
+                <td>{{ service_apreslocation.type.typeName }}</td>
+                <td>{{ service_apreslocation.technicien }}</td>
+                <td>{{ service_apreslocation.description }}</td>
+                <td>{{ service_apreslocation.statut }}</td>
+                <td>{{ service_apreslocation.cout }}</td>
+                <td>
+                    <a href="{{ path('app_service_apreslocation_show', {'idservice': service_apreslocation.idservice}) }}" class="btn btn-primary btn-sm btn-margin">Information</a>
+                    <a href="{{ path('app_service_apreslocation_edit', {'idservice': service_apreslocation.idservice}) }}" class="btn btn-warning btn-sm btn-margin">Modifier</a>
+                    <form action="{{ path('app_service_apreslocation_delete', {'idservice': service_apreslocation.idservice}) }}" method="post" style="display: inline;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ service_apreslocation.idservice) }}">
+                        <button type="submit" class="btn btn-danger btn-sm btn-margin">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">Aucun enregistrement trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_service_apreslocation_new') }}" class="btn btn-success btn-sm" style="margin-left: 300px;">Créer un nouveau service</a> <!-- Ajoutez le style ici -->
+
+{% endblock %}
