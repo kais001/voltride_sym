@@ -1,0 +1,21 @@
+{% extends 'login.html.twig' %}
+
+{% block body %}
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+
+    <form action="{{ path('app_login') }}" method="post">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="_username" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="_password" required>
+        </div>
+        <div>
+            <button type="submit">Login</button>
+        </div>
+    </form>
+{% endblock %}

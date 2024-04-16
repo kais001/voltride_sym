@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin index{% endblock %}
+
+{% block body %}
+<div class="main-container">
+    <div class="white-frame">
+        <div class="content">
+            <h1>Admin index</h1>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Cin</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Email</th>
+                        <th>Mot de passe</th>
+                        <th>Date d'inscription</th>
+                        <th>Image</th>
+                        <th>Département</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for admin in admins %}
+                    <tr>
+                        <td>{{ admin.utilisateur.cin }}</td>
+                        <td>{{ admin.utilisateur.nom }}</td>
+                        <td>{{ admin.utilisateur.prenom }}</td>
+                        <td>{{ admin.utilisateur.email }}</td>
+                        <td>{{ admin.utilisateur.motDePasse }}</td>
+                        <td>{{ admin.utilisateur.dateInscription ? admin.utilisateur.dateInscription|date('Y-m-d H:i:s') : '' }}</td>
+                        {% if admin.utilisateur.image is not null %}
+    <td><img src="{{ admin.utilisateur.image }}" alt="Image de profil" width="50" height="50"></td>
+{% else %}
+    <td>No image available</td>
+{% endif %}
+
+                        <td>{{ admin.departement }}</td>
+                        <td>
+                            <a href="{{ path('app_admin_edit', {'id': admin.utilisateur.id_u}) }}" class="btn btn-sm btn-primary">Edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">No records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <a href="{{ path('app_admin_new') }}" class="btn btn-primary">Create new</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
