@@ -1,59 +1,54 @@
 <?php
-// Entité Utilisateur
+
 namespace App\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
-use App\Security\CustomPasswordEncoder;
+use App\Repository\UtilisateurRepository; 
 
-
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
-
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 class Utilisateur
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private ?int $id_u;
+    #[ORM\Column(name: "id_u", type: "integer")]
+    private ?int $idU = null;
 
-    
-    #[ORM\Column(type: 'integer')]
-    #[Assert\NotBlank(message: "Vous devez remplir tous les champs vides")]
-    #[Assert\Regex(pattern: "/^\d{8}$/", message: "Le CIN doit contenir 8 chiffres")]
-    private ?int $cin;
+    #[ORM\Column(name: "cin", type: "integer", nullable: true)]
+    private ?int $cin = null;
 
-    #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: "Vous devez remplir tous les champs vides")]
-    #[Assert\Regex(pattern: "/^[A-Z][a-zA-Z]*$/", message: "Le nom doit commencer par une lettre majuscule")]
-    private ?string $nom;
+    #[ORM\Column(name: "nom", type: "string", length: 150, nullable: true)]
+    private ?string $nom = null;
 
-    #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: "Vous devez remplir tous les champs vides")]
-    #[Assert\Regex(pattern: "/^[A-Z][a-zA-Z]*$/", message: "Le prénom doit commencer par une lettre majuscule")]
-    private ?string $prenom;
+    #[ORM\Column(name: "prenom", type: "string", length: 150, nullable: true)]
+    private ?string $prenom = null;
 
-    #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: "Vous devez remplir tous les champs vides")]
-    #[Assert\Email(message: "Manquant @ ou .")]
-    private ?string $email;
+    #[ORM\Column(name: "email", type: "string", length: 150, nullable: true)]
+    private ?string $email = null;
 
-    #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: "Vous devez remplir tous les champs vides")]
-    private ?string $motDePasse;
+    #[ORM\Column(name: "mot_de_passe", type: "string", length: 150, nullable: true)]
+    private ?string $motDePasse = null;
 
-    
+    #[ORM\Column(name: "date_inscription", type: "date")]
+    private \DateTime $dateInscription;
 
-    #[ORM\Column(type: 'datetime')]
-    private ?\DateTimeInterface $dateInscription;
-
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(name: "image", type: "string", length: 150, nullable: true)]
     private ?string $image;
 
-    // Autres propriétés de l'utilisateur
-
-    public function getId_u(): ?int
+    public function getIdU(): ?int
     {
-        return $this->id_u;
+        return $this->idU;
+    }
+
+    public function getCin(): ?int
+    {
+        return $this->cin;
+    }
+
+    public function setCin(int $cin): static
+    {
+        $this->cin = $cin;
+
+        return $this;
     }
 
     public function getNom(): ?string
@@ -61,9 +56,10 @@ class Utilisateur
         return $this->nom;
     }
 
-    public function setNom(?string $nom): self
+    public function setNom(string $nom): static
     {
         $this->nom = $nom;
+
         return $this;
     }
 
@@ -72,9 +68,10 @@ class Utilisateur
         return $this->prenom;
     }
 
-    public function setPrenom(?string $prenom): self
+    public function setPrenom(string $prenom): static
     {
         $this->prenom = $prenom;
+
         return $this;
     }
 
@@ -83,9 +80,10 @@ class Utilisateur
         return $this->email;
     }
 
-    public function setEmail(?string $email): self
+    public function setEmail(string $email): static
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -94,20 +92,10 @@ class Utilisateur
         return $this->motDePasse;
     }
 
-    public function setMotDePasse(?string $motDePasse): self
+    public function setMotDePasse(string $motDePasse): static
     {
         $this->motDePasse = $motDePasse;
-        return $this;
-    }
 
-    public function getCin(): ?int // Méthode d'accès pour la propriété cin
-    {
-        return $this->cin;
-    }
-
-    public function setCin(?int $cin): self // Méthode d'accès pour la propriété cin
-    {
-        $this->cin = $cin;
         return $this;
     }
 
@@ -116,9 +104,10 @@ class Utilisateur
         return $this->dateInscription;
     }
 
-    public function setDateInscription(?\DateTimeInterface $dateInscription): self
+    public function setDateInscription(\DateTimeInterface $dateInscription): static
     {
         $this->dateInscription = $dateInscription;
+
         return $this;
     }
 
@@ -127,11 +116,15 @@ class Utilisateur
         return $this->image;
     }
 
-    public function setImage(?string $image): self
+    public function setImage(?string $image): static
     {
         $this->image = $image;
+
         return $this;
     }
+    public function __toString()
+{
+    return 'ID: ' . $this->idU . ', Cin: ' . $this->cin . ', Nom: ' . $this->nom . ', Prénom: ' . $this->prenom . ', Email: ' . $this->email . ', Date d\'inscription: ' . $this->dateInscription->format('Y-m-d') . ', Image: ' . $this->image;
+}
 
-    
 }

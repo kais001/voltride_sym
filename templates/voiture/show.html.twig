@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voiture{% endblock %}
+
+{% block center %}
+    <div class="main-container">
+        <div class="content">
+            <div class="white-frame">
+                <h1>Voiture</h1>
+
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>IdV</th>
+                            <td>{{ voiture.idV }}</td>
+                        </tr>
+                        <tr>
+                            <th>Marque</th>
+                            <td>{{ voiture.marque }}</td>
+                        </tr>
+                        <tr>
+                            <th>Modele</th>
+                            <td>{{ voiture.modele }}</td>
+                        </tr>
+                        <tr>
+                            <th>Etat</th>
+                            <td>{{ voiture.etat }}</td>
+                        </tr>
+                        <tr>
+                            <th>PrixLocation</th>
+                            <td>{{ voiture.prixLocation }}</td>
+                        </tr>
+                        <tr>
+                            <th>Kilometrage</th>
+                            <td>{{ voiture.kilometrage }}</td>
+                        </tr>
+                        <tr>
+                            <th>Image</th>
+                            <td>
+                                {% if voiture.image %}
+                                    <img src="{{ asset('C:\Userscharef/Downloads/' ~ voiture.image) }}" alt="Voiture Image">
+                                {% else %}
+                                    No image available
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <a href="{{ path('app_voiture_index') }}">back to list</a>
+
+                <a href="{{ path('app_voiture_edit', {'idV': voiture.idV}) }}">edit</a>
+
+                {{ include('voiture/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

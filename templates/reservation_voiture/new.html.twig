@@ -1,0 +1,15 @@
+{% extends 'baseF.html.twig' %}
+
+{% block title %}New ReservationVoiture{% endblock %}
+
+{% block center %}
+    <h1>Create new ReservationVoiture</h1>
+{{ form_start(form) }}
+    {{ form_row(form.dateDebut) }}
+    {{ form_row(form.dateFin) }}
+  
+    {{ form_row(form.utilisateur) }}
+ <button class="btn">{{ button_label|default('Save') }}</button>
+    <a href="{{ path('app_reservation_voiture_index') }}">back to list</a>
+    {{ form_end(form) }}
+{% endblock %}
