@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin details{% endblock %}
+
+{% block body %}
+    <h1>Admin details</h1>
+
+    <dl class="row">
+        <dt class="col-sm-3">Departement:</dt>
+        <dd class="col-sm-9">{{ admin.departement }}</dd>
+    </dl>
+
+    <a href="{{ path('app_admin_edit', {'id': admin.utilisateur.id_u}) }}">Edit</a>
+
+    <form action="{{ path('app_admin_delete', {'id': admin.utilisateur.id_u}) }}" method="post">
+        {{ csrf_token('delete' ~ admin.utilisateur.id_u) }}
+        <button type="submit">Delete</button>
+    </form>
+
+    <a href="{{ path('app_admin_index') }}">Back to list</a>
+{% endblock %}
