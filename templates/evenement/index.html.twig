@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evenement{% endblock %}
+
+{% block center %}
+    <h1>Evenement</h1>
+    <div class="main-container">
+    <div class="white-frame"> <!-- Div avec cadre blanc -->
+            <div class="table-container"> <!-- Div pour centrer le tableau -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id_event</th>
+                <th>Type</th>
+                <th>AdresseEvenement</th>
+                <th>DateEvenement</th>
+                <th>PlacesDispo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for evenement in evenements %}
+            <tr>
+                <td>{{ evenement.id_event }}</td>
+                <td>{{ evenement.type }}</td>
+                <td>{{ evenement.adresseEvenement }}</td>
+                <td>{{ evenement.dateEvenement ? evenement.dateEvenement|date('Y-m-d') : '' }}</td>
+                <td>{{ evenement.placesDispo }}</td>
+                <td>
+                    <a href="{{ path('app_evenement_show', {'id_event': evenement.id_event}) }}">show</a>
+                    <a href="{{ path('app_evenement_edit', {'id_event': evenement.id_event}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+    <a href="{{ path('app_evenement_new') }}">Create new</a>
+    </div>
+{% endblock %}

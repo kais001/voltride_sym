@@ -277,35 +277,23 @@
 				</div>
 			</div>
 			
-<div class="menu-block customscroll">
-    <div class="sidebar-menu">
-        <ul id="accordion-menu">
-            <style>
-                /* Style pour l'image lorsque l'utilisateur survole le bouton */
-                .dropdown-toggle:hover .micon img {
-                    content: url("{{ asset('images/22.png') }}");
-                }
-            </style>
-
-            <li class="dropdown">
-                <a href="javascript:;" class="dropdown-toggle">
-                    <span class="micon">
-                        <img src="{{ asset('images/Sample_User_Icon.png') }}" alt="Votre logo" />
-                    </span>
-                    <span class="mtext">Gestion Utilisateurs</span>
-                </a>
-                <ul class="submenu">
-                    <li><a href="{{ path('admin') }}">Gestion Admins</a></li>
-                    <li><a href="{{ path('utilisateur') }}">Gestion Clients</a></li>
-                </ul>
-            </li>
-
-
-
-            <li class="dropdown">
-              <a href="javascript:;" class="dropdown-toggle">
-                <span class="micon bi bi-file-earmark-text"></span
-                ><span class="mtext">Gestion Voitures</span>
+			<div class="menu-block customscroll">
+				<div class="sidebar-menu">
+					<ul id="accordion-menu">
+						<li class="dropdown">
+							<a href=" {{asset('base.html.twig" class="dropdown-toggle')}}">
+								<span class="micon bi bi-house"></span
+								><span class="mtext">Home</span>
+							</a>
+						</li>
+						
+						
+						
+						
+						<li class="dropdown">
+							<a href="javascript:;" class="dropdown-toggle">
+								<span class="micon bi bi-file-earmark-text"></span
+								><span class="mtext">Gestion Voitures</span>
 							</a>
 							<ul class="submenu">
 								<li><a href="">Ajouter Voiture</a></li>
@@ -374,7 +362,7 @@
 		</div>
 
 		
-        {% block body %}
+        {% block center %}
     <div class="main-container">
 	 <div class="content">
         <div class="white-frame">
@@ -385,21 +373,6 @@
 {% endblock %}
 
 		<!-- js -->
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('a[href="/admin"]').click(function(event) {
-            event.preventDefault(); // Empêche le comportement de lien par défaut
-            window.location.href = $(this).attr('href'); // Met à jour l'URL de la page
-        });
-
-        $('a[href="/utilisateur"]').click(function(event) {
-            event.preventDefault(); // Empêche le comportement de lien par défaut
-            window.location.href = $(this).attr('href'); // Met à jour l'URL de la page
-        });
-    });
-</script>
-
 		<script src="{{asset('scripts/core.js')}}"></script>
 		<script src="{{asset('scripts/script.min.js')}}"></script>
 		<script src="{{asset('scripts/process.js')}}"></script>

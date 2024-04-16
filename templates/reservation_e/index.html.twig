@@ -1,0 +1,37 @@
+{% extends 'baseF.html.twig' %}
+
+{% block title %}ReservationE index{% endblock %}
+
+{% block center %}
+    <h1>ReservationE index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id_e</th>
+                <th>NbrPersonne</th>
+                <th>Commentaire</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation_e in reservation_es %}
+            <tr>
+                <td>{{ reservation_e.id_e }}</td>
+                <td>{{ reservation_e.nbrPersonne }}</td>
+                <td>{{ reservation_e.Commentaire }}</td>
+                <td>
+                    <a href="{{ path('app_reservation_e_show', {'id_e': reservation_e.id_e}) }}">show</a>
+                    <a href="{{ path('app_reservation_e_edit', {'id_e': reservation_e.id_e}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reservation_e_new') }}">Create new</a>
+{% endblock %}

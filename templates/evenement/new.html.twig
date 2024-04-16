@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Evenement{% endblock %}
+
+{% block center %}
+    <h1>Create new Evenement</h1>
+   <div class="main-container">
+    <div class="white-frame"> <!-- Div avec cadre blanc -->
+            <div class="table-container"> <!-- Div pour centrer le tableau -->
+    {{ include('evenement/_form.html.twig') }}
+
+    <a href="{{ path('app_evenement_index') }}">back to list</a>
+    </div>
+     </div>
+      </div>
+{% endblock %}

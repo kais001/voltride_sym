@@ -2,48 +2,16 @@
 
 {% block title %}Utilisateur{% endblock %}
 
-{% block body %}
+{% block center %}
     <h1>Utilisateur</h1>
-
+ <div class="main-container">
+    <div class="white-frame"> <!-- Div avec cadre blanc -->
+            <div class="table-container"> <!-- Div pour centrer le tableau -->
     <table class="table">
         <tbody>
             <tr>
                 <th>Id_u</th>
                 <td>{{ utilisateur.id_u }}</td>
-            </tr>
-            <tr>
-                <th>Cin</th>
-                <td>{{ utilisateur.cin }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ utilisateur.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ utilisateur.prenom }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ utilisateur.email }}</td>
-            </tr>
-            <tr>
-                <th>MotDePasse</th>
-                <td>{{ utilisateur.motDePasse }}</td>
-            </tr>
-            <tr>
-                <th>DateInscription</th>
-                <td>{{ utilisateur.dateInscription ? utilisateur.dateInscription|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-                  <tr>
-                <th>Image</th>
-                <td>
-                    {% if utilisateur.image %}
-                        <img src="{{ utilisateur.image }}" alt="Image de profil" width="50" height="50">
-                    {% else %}
-                        No image available
-                    {% endif %}
-                </td>
             </tr>
         </tbody>
     </table>
@@ -53,4 +21,7 @@
     <a href="{{ path('app_utilisateur_edit', {'id_u': utilisateur.id_u}) }}">edit</a>
 
     {{ include('utilisateur/_delete_form.html.twig') }}
+    </div>
+    </div>
+    </div>
 {% endblock %}

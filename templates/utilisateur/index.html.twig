@@ -3,50 +3,31 @@
 {% block title %}Utilisateur index{% endblock %}
 
 {% block body %}
-<div class="main-container">
-    <div class="white-frame">
-        <div class="content">
-            <h1>Utilisateur index</h1>
-            <a href="{{ path('app_utilisateur_new') }}" class="btn btn-primary">Create new</a>
+    <h1>Utilisateur index</h1>
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id_u</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for utilisateur in utilisateurs %}
+            <tr>
+                <td>{{ utilisateur.id_u }}</td>
+                <td>
+                    <a href="{{ path('app_utilisateur_show', {'id_u': utilisateur.id_u}) }}">show</a>
+                    <a href="{{ path('app_utilisateur_edit', {'id_u': utilisateur.id_u}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Cin</th>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Email</th>
-                        <th>Mot de passe</th>
-                        <th>Date d'inscription</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for utilisateur in utilisateurs %}
-                    <tr>
-                        <td>{{ utilisateur.cin }}</td>
-                        <td>{{ utilisateur.nom }}</td>
-                        <td>{{ utilisateur.prenom }}</td>
-                        <td>{{ utilisateur.email }}</td>
-                        <td>{{ utilisateur.motDePasse }}</td>
-                        <td>{{ utilisateur.dateInscription ? utilisateur.dateInscription|date('Y-m-d H:i:s') : '' }}</td>
-                       
-                        <td>
-                            <a href="{{ path('app_utilisateur_edit', {'id_u': utilisateur.id_u}) }}" class="btn btn-sm btn-primary">Edit</a>
-                            <a href="{{ path('app_utilisateur_show', {'id_u': utilisateur.id_u}) }}" class="btn btn-sm btn-primary">show</a>
-
-                        </td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                        <td colspan="8">No records found</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+    <a href="{{ path('app_utilisateur_new') }}">Create new</a>
 {% endblock %}
