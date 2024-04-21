@@ -1,14 +1,10 @@
 <?php
 // Entité Utilisateur
 namespace App\Entity;
-use Doctrine\ORM\Mapping as ORM;
-use App\Security\CustomPasswordEncoder;
-
-
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-
-#[ORM\Entity]
+use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UtilisateurRepository; 
+#[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 class Utilisateur
 {
     #[ORM\Id]

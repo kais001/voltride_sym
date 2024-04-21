@@ -3,13 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Repository\AdminRepository;
 use App\Security\CustomPasswordEncoder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Doctrine\ORM\EntityManagerInterface; 
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use App\Entity\Admin;
+
 
 class LoginController extends AbstractController
 {
@@ -21,7 +25,7 @@ class LoginController extends AbstractController
     }
 
     #[Route('/login', name: 'app_login', methods: ['GET', 'POST'])]
-    public function login(Request $request, AuthenticationUtils $authenticationUtils): Response
+    public function login(Request $request, AuthenticationUtils $authenticationUtils, SessionInterface $session): Response
     {
         // Récupérer l'erreur de connexion s'il y en a une
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -36,6 +40,8 @@ class LoginController extends AbstractController
         if ($request->isMethod('POST')) {
             $email = $request->request->get('_username');
             $password = $request->request->get('_password');
+
+            
 
             // Vérifier si l'utilisateur existe dans la base de données
             $user = $this->entityManager->getRepository(Utilisateur::class)->findOneBy(['email' => $email]);
@@ -54,7 +60,20 @@ class LoginController extends AbstractController
                 // Vérifier si le mot de passe est correct
                 if ($password === $decryptedPassword) {
                     // Authentification réussie
-                    $message = 'mriguel';
+                    
+                    // Vérifier si l'utilisateur est un admin
+                    $admin = $this->entityManager->getRepository(Admin::class)->findOneBy(['utilisateur' => $user]);
+                    if ($admin) {
+                        // Rediriger l'admin vers la page admin
+                        return $this->redirectToRoute('app_admin_index');
+                    } else {
+                        // L'utilisateur est un utilisateur normal
+                        // Stocke l'ID de l'utilisateur dans la session
+                        $session->set('user_id', $user->getId_u());
+                        
+                        // Rediriger l'utilisateur vers une autre page, par exemple 'index'
+                        return $this->redirectToRoute('index');
+                    }
                 } else {
                     // Mot de passe incorrect
                     $error = 'Mot de passe incorrect.';
@@ -62,6 +81,7 @@ class LoginController extends AbstractController
                     $message = ' mot de passe ghalet';
                 }
             }
+        
         }
 
         return $this->render('login/log.html.twig', [
@@ -76,5 +96,18 @@ class LoginController extends AbstractController
     {
         return $this->render('baseF.html.twig');
     }
-}
 
+    public function generatePassword() {
+        // Longueur du mot de passe
+        $length = 8;
+        // Caractères possibles dans le mot de passe
+        $characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        // Initialisation du mot de passe
+        $password = '';
+        // Génération du mot de passe
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $characters[rand(0, strlen($characters) - 1)];
+        }
+        return $password;
+    }
+}
