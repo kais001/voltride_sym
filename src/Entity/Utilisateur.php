@@ -1,10 +1,14 @@
 <?php
 // Entité Utilisateur
 namespace App\Entity;
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\UtilisateurRepository; 
-#[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
+use App\Security\CustomPasswordEncoder;
+
+
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
+#[ORM\Entity]
 class Utilisateur
 {
     #[ORM\Id]
@@ -46,6 +50,11 @@ class Utilisateur
     private ?string $image;
 
     // Autres propriétés de l'utilisateur
+    public function __construct()
+    {
+        // Initialisez la propriété image avec une valeur par défaut
+        $this->image = ''; // Ou toute autre valeur par défaut que vous préférez
+    }
 
     public function getId_u(): ?int
     {

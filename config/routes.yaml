@@ -44,3 +44,10 @@ app_login:
 login_check:
   path: /login_check
   methods: [POST]
+
+# config/routes.yaml
+
+send_email:
+  path: /send
+  controller: App\Controller\GmailController::sendEmail
+  methods: ["GET", "POST"]

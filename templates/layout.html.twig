@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/all.min.css') }}">
+    <link href="{{ asset('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap') }}" rel="stylesheet">
+    <style>
+        /* Styles communs */
+        /* Mettez ici tous les styles que vous voulez partager entre les différentes pages */
+    </style>
+</head>
+<body>
+    {% block content %}{% endblock %}
+</body>
+</html>

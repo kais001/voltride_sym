@@ -1,11 +1,10 @@
 <?php
 // Entité Admin
 namespace App\Entity;
-use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\ORM\Mapping as ORM;
-use App\Repository\UtilisateurRepository; 
-#[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity]
 class Admin
 {
     #[ORM\Id]

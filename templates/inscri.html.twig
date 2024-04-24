@@ -10,7 +10,7 @@
     <!-- Main Style Css -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
     {% block head %}
-    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+    
     {% endblock %}
 </head>
 <body class="form-v8">
@@ -25,10 +25,11 @@
                         
                     </div>
                 </div>
-                <form class="form-detail" action="#" method="post" enctype="multipart/form-data">
+ <form class="form-detail" action="#" method="post" enctype="multipart/form-data" novalidate>
+
                 
                     {% block body %}
-                       
+                      
                     {% endblock %}
                 </form>
             </div>
