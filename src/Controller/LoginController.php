@@ -97,17 +97,4 @@ class LoginController extends AbstractController
         return $this->render('baseF.html.twig');
     }
 
-    public function generatePassword() {
-        // Longueur du mot de passe
-        $length = 8;
-        // Caractères possibles dans le mot de passe
-        $characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        // Initialisation du mot de passe
-        $password = '';
-        // Génération du mot de passe
-        for ($i = 0; $i < $length; $i++) {
-            $password .= $characters[rand(0, strlen($characters) - 1)];
-        }
-        return $password;
-    }
 }

@@ -51,3 +51,8 @@ send_email:
   path: /send
   controller: App\Controller\GmailController::sendEmail
   methods: ["GET", "POST"]
+
+app_show_password_recovery_form:
+  path: /pass
+  controller: App\Controller\GetmpController::getPasswordRecovery
+  methods: ["GET", "POST"]
