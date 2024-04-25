@@ -13,15 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use DateTime;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Security\CustomPasswordEncoder; // Importez la classe CustomPasswordEncoder
+use App\Service\UserExcelExporter;
+
 
 #[Route('/utilisateur')]
 class UtilisateurController extends AbstractController
 {
     private $passwordEncoder;
+    private $userExcelExporter; // Ajoutez une propriété pour le service UserExcelExporter
 
-    public function __construct(CustomPasswordEncoder $passwordEncoder)
+    public function __construct(CustomPasswordEncoder $passwordEncoder, UserExcelExporter $userExcelExporter)
     {
         $this->passwordEncoder = $passwordEncoder;
+        $this->userExcelExporter = $userExcelExporter; // Injectez le service UserExcelExporter
     }
 
     #[Route('/', name: 'app_utilisateur_index', methods: ['GET'])]
@@ -29,7 +33,6 @@ class UtilisateurController extends AbstractController
     {
         return $this->render('utilisateur/index.html.twig', [
             'utilisateurs' => $utilisateurRepository->findAll(),
-            
         ]);
     }
 
@@ -39,7 +42,7 @@ class UtilisateurController extends AbstractController
         $utilisateur = new Utilisateur();
         
         // Assigner la date d'inscription actuelle à l'utilisateur
-        $utilisateur->setDateInscription(new DateTime());
+        $utilisateur->setDateInscription(new \DateTime());
         
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
@@ -70,16 +73,20 @@ class UtilisateurController extends AbstractController
             $entityManager->persist($utilisateur);
             $entityManager->flush();
             
+            // Exporter les utilisateurs vers Excel après chaque ajout
+            $this->userExcelExporter->exportUsersToExcel();
+
             // Rediriger vers la page d'index des utilisateurs
             return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
         }
-    
+
         // Afficher le formulaire de création d'utilisateur
         return $this->renderForm('utilisateur/new.html.twig', [
             'utilisateur' => $utilisateur,
             'form' => $form,
         ]);
     }
+
     
     
     
