@@ -27,3 +27,7 @@ services:
   App\Service\UserExcelExporter:
     arguments:
       $entityManager: "@doctrine.orm.entity_manager"
+
+  # Service definition for Google\Client
+  Google\Client:
+    class: Google\Client
