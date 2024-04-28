@@ -9,8 +9,8 @@ use Google\Service\Drive\DriveFile;
 
 // Initialiser le client Google
 $client = new GoogleClient();
-$client->setClientId(''); // Remplacez VOTRE_CLIENT_ID par votre identifiant client
-$client->setClientSecret(''); // Remplacez VOTRE_CLIENT_SECRET par votre client secret
+$client->setClientId('321041928925-nrbors4kbmdtgaaj6kitck6ppb4gj6av.apps.googleusercontent.com'); // Remplacez VOTRE_CLIENT_ID par votre identifiant client
+$client->setClientSecret('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'); // Remplacez VOTRE_CLIENT_SECRET par votre client secret
 $client->setRedirectUri('https://127.0.0.1:8000/oauth2callback.php'); // Remplacez example.com par le domaine de votre application
 $client->addScope(Drive::DRIVE_FILE);
 $client->setAccessType('offline');
