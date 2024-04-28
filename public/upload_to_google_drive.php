@@ -10,8 +10,8 @@ use Google\Service\Drive;
 // Initialiser le client Google
 $client = new GoogleClient();
 $client->setApplicationName('VOLTRIDE_SYM');
-$client->setClientId('321041928925-nrbors4kbmdtgaaj6kitck6ppb4gj6av.apps.googleusercontent.com'); // Remplacez VOTRE_CLIENT_ID par votre identifiant client
-$client->setClientSecret('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'); // Remplacez VOTRE_CLIENT_SECRET par votre client secret
+$client->setClientId(''); // Remplacez VOTRE_CLIENT_ID par votre identifiant client
+$client->setClientSecret(''); // Remplacez VOTRE_CLIENT_SECRET par votre client secret
 $client->addScope(Drive::DRIVE_FILE);
 $client->setAccessType('offline');
 $client->setRedirectUri('https://127.0.0.1:8000/oauth2callback.php'); // Assurez-vous de remplacer par l'URI de redirection correcte
