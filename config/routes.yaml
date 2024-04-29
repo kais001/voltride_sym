@@ -1,3 +1,7 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+app_reservation_e_statistics:
+    path: /reservation_e/statistics
+    controller: App\Controller\ReservationEController::statistics
+    methods: ['GET']

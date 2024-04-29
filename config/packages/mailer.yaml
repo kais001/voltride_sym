@@ -1,3 +1,4 @@
 framework:
     mailer:
-        dsn: '%env(MAILER_DSN)%'
+       dsn: 'smtp://smtp.example.com:587?encryption=tls&auth_mode=login&username=user&password=yourpassword'
+

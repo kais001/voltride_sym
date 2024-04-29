@@ -20,29 +20,22 @@ class ReservationERepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ReservationE::class);
     }
+    public function findAllOrderByNbrPersonneAsc()
+    {
+        return $this->createQueryBuilder('re')
+            ->orderBy('re.nbrPersonne', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
-//    /**
-//     * @return ReservationE[] Returns an array of ReservationE objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?ReservationE
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    // Méthode pour trier les réservations par nombre de personnes (nbrPersonne) de manière décroissante
+    public function findAllOrderByNbrPersonneDesc()
+    {
+        return $this->createQueryBuilder('re')
+            ->orderBy('re.nbrPersonne', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+    // Méthode pour trier les réservations par nombre de personnes (nbrPersonne)
+   
 }

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation Statistics{% endblock %}
+
+{% block center %}
+    <h1>Reservation Statistics</h1>
+    <div>
+        <p>Total Reservations: {{ statistics.totalReservations }}</p>
+        <p>Average Persons per Reservation: {{ statistics.avgPersonsPerReservation }}</p>
+        <!-- Ajoutez d'autres statistiques si nécessaire -->
+    </div>
+
+    <canvas id="reservationChart" width="400" height="400"></canvas>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/chartjs/js/Chart.min.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('reservationChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Total Reservations', 'Average Persons per Reservation'],
+                    datasets: [{
+                        label: 'Reservation Statistics',
+                        data: [{{ statistics.totalReservations }}, {{ statistics.avgPersonsPerReservation }}],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    maintainAspectRatio: false
+                }
+            });
+        });
+    </script>
+{% endblock %}
