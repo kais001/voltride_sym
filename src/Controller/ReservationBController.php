@@ -66,36 +66,11 @@ class ReservationBController extends AbstractController
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
-            try {
                 // Persist the reservation
                 $entityManager->persist($reservationB);
                 $entityManager->flush();
     
-                // Retrieve Twilio credentials and phone number from environment variables
-                $twilioAccountSid = getenv('TWILIO_ACCOUNT_SID');
-                $twilioAuthToken = getenv('TWILIO_AUTH_TOKEN');
-                $twilioPhoneNumber = getenv('TWILIO_PHONE_NUMBER');
-                $recipientPhoneNumber = '+21694347721'; // Replace with recipient's phone number
-                $message = 'Your reservation has been confirmed. Thank you!';
-    
-                // Initialize Twilio client
-                $client = new Client($twilioAccountSid, $twilioAuthToken);
-    
-                // Send SMS message
-                $client->messages->create(
-                    $recipientPhoneNumber,
-                    [
-                        'from' => $twilioPhoneNumber,
-                        'body' => $message,
-                    ]
-                );
-    
-                // Flash message indicating success
-                $this->addFlash('success', 'Reservation saved and SMS sent successfully!');
-            } catch (TwilioException $e) {
-                // Handle Twilio exception
-                $this->addFlash('error', 'Failed to send SMS: ' . $e->getMessage());
-            }
+
     
             // Redirect to the index route after successful save
             return $this->redirectToRoute('app_reservation_b_indexi', [], Response::HTTP_SEE_OTHER);
