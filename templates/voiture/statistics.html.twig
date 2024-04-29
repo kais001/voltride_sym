@@ -1,0 +1,25 @@
+{# statistics.html.twig #}
+
+{% extends 'baseF.html.twig' %}
+
+{% block title %}Statistics{% endblock %}
+
+{% block body %}
+    <h1>Reservation Statistics</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Month</th>
+                <th>Number of Reservations</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for month, count in reservationsPerMonth %}
+                <tr>
+                    <td>{{ month }}</td>
+                    <td>{{ count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

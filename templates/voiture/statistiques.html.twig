@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Afficher statistiques{% endblock %}
+
+{% block center %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Statistiques</title>
+    <!-- Inclure la bibliothèque Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+        /* Définir la taille du graphe */
+        .chart-container {
+            width: 600px; /* Définir la largeur */
+            height: 400px; /* Définir la hauteur */
+            margin: auto; /* Centrer le graphe horizontalement */
+            margin-top: 20px; /* Ajouter un peu d'espace au-dessus du graphe */
+        }
+    </style>
+</head>
+<body>
+    <!-- Premier graphique: Nombre de réservations par marque de voiture -->
+    <div class="chart-container">
+        <canvas id="reservationsByCarBrandChart"></canvas>
+    </div>
+
+    <script>
+        // Récupérer les données depuis PHP (Twig)
+        const reservationsByCarBrand = {{ reservationsByCarBrand|json_encode|raw }};
+
+        // Extraire les marques de voiture et les nombres de réservations
+        const brands = Object.keys(reservationsByCarBrand);
+        const counts = Object.values(reservationsByCarBrand);
+
+        // Créer le graphe pour les réservations par marque de voiture
+        const ctxReservationsByCarBrand = document.getElementById('reservationsByCarBrandChart').getContext('2d');
+        const reservationsByCarBrandChart = new Chart(ctxReservationsByCarBrand, {
+            type: 'bar',
+            data: {
+                labels: brands,
+                datasets: [{
+                    label: 'Nombre de réservations par marque de voiture',
+                    data: counts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

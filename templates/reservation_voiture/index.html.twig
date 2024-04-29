@@ -4,10 +4,21 @@
 
 {% block center %}
     <div class="main-container">
+        <!-- Inclure le widget de traduction Google en haut de la page -->
+        <div id="google_translate_element"></div>
 
+        <!-- Formulaire de recherche -->
+        <form action="{{ path('app_reservation_voiture_index') }}" method="GET" class="mb-3">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Rechercher une voiture...">
+                <button type="submit" class="btn btn-outline-primary">Rechercher</button>
+            </div>
+        </form>
+
+        <!-- Affichage des voitures -->
         <div class="white-frame"> <!-- Div avec cadre blanc -->
             <div class="row row-cols-1 row-cols-md-3 g-4">
-                {% for voiture in voitures %}
+                {% for voiture in pagination %}
                     <div class="col">
                         <div class="card h-100">
                             <img src="{{ asset('uploads/' ~ voiture.image) }}" class="card-img-top" alt="Voiture Image">
@@ -27,8 +38,21 @@
             </div>
         </div>
         
-        <br> <!-- Saut de ligne -->
+        <!-- Pagination -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {{ knp_pagination_render(pagination) }} {# Afficher la pagination #}
+            </ul>
+        </nav>
         <a href="{{ path('app_reservation_voiture_indexi') }}" class="btn btn-success">Afficher les réservations</a>
         
     </div>
+
+    <!-- Inclure le script pour le widget de traduction Google -->
+    <script type="text/javascript"> 
+        function googleTranslateElementInit() { 
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element'); 
+        } 
+    </script>  
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 {% endblock %}

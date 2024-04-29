@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 #[Route('/voiture')]
 class VoitureController extends AbstractController
@@ -38,7 +39,26 @@ return $this->render('voiture/afficherReservation.html.twig', [
     'reservation_voitures' => $reservationVoitures,
 ]);
     }
+    private function handleImageUpload(Request $request, Voiture $voiture): void
+    {
+        /** @var UploadedFile $uploadedFile */
+        $uploadedFile = $request->files->get('voiture')['image'];
 
+        if ($uploadedFile) {
+            $newFilename = uniqid() . '.' . $uploadedFile->guessExtension();
+
+            try {
+                $uploadedFile->move(
+                    $this->getParameter('images_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                // Gérer l'erreur de téléchargement ici
+            }
+
+            $voiture->setImage($newFilename);
+        }
+    }
     #[Route('/new', name: 'app_voiture_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -47,6 +67,9 @@ return $this->render('voiture/afficherReservation.html.twig', [
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Gérer le téléchargement de l'image
+            $this->handleImageUpload($request, $voiture);
+
             $entityManager->persist($voiture);
             $entityManager->flush();
 
@@ -94,5 +117,16 @@ return $this->render('voiture/afficherReservation.html.twig', [
         }
 
         return $this->redirectToRoute('app_voiture_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/statistiques', name: 'app_voiture_statistiques')]
+    public function statistiques(VoitureRepository $voitureRepository): Response
+    {
+        // Utiliser la fonction countReservationsByStateAndBrand du repository pour obtenir les statistiques
+        $reservationsByCarBrand = $voitureRepository->countReservationsByStateAndBrand('HUMMER');
+    
+        // Passer les statistiques à la vue
+        return $this->render('voiture/statistiques.html.twig', [
+            'reservationsByCarBrand' => $reservationsByCarBrand,
+        ]);
     }
 }

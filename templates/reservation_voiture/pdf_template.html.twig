@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Réservation de voiture</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Réservation de voiture</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>IdR</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Voiture</th>
+                <th>Marque</th>
+                <th>Modèle</th>
+                <th>État</th>
+                <th>Prix de location</th>
+                <th>Kilométrage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ reservation_voiture.idR }}</td>
+                <td>{{ reservation_voiture.dateDebut ? reservation_voiture.dateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation_voiture.dateFin ? reservation_voiture.dateFin|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation_voiture.voiture.marque }} {{ reservation_voiture.voiture.modele }}</td>
+                <td>{{ reservation_voiture.voiture.marque }}</td>
+                <td>{{ reservation_voiture.voiture.modele }}</td>
+                <td>{{ reservation_voiture.voiture.etat }}</td>
+                <td>{{ reservation_voiture.voiture.prixLocation }}</td>
+                <td>{{ reservation_voiture.voiture.kilometrage }}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

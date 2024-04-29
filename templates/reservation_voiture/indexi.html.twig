@@ -20,6 +20,7 @@
                                 <th>PrixLocation</th>
                                 <th>Kilometrage</th>
                                 <th>actions</th>
+                                <th>Télécharger PDF</th> {# Ajoutez cette colonne pour le bouton PDF #}
                             </tr>
                         </thead>
                         <tbody>
@@ -38,10 +39,13 @@
                                         <a href="{{ path('app_reservation_voiture_show', {'idR': reservation_voiture.idR}) }}">show</a>
                                         <a href="{{ path('app_reservation_voiture_edit', {'idR': reservation_voiture.idR}) }}">edit</a>
                                     </td>
+                                    <td>
+                                        <a href="{{ path('app_reservation_voiture_download_pdf', {'idR': reservation_voiture.idR}) }}">Télécharger PDF</a>
+                                    </td> {# Ajoutez le lien pour télécharger le PDF #}
                                 </tr>
                             {% else %}
                                 <tr>
-                                    <td colspan="10">no records found</td>
+                                    <td colspan="11">no records found</td> {# Mettez à jour le nombre total de colonnes #}
                                 </tr>
                             {% endfor %}
                         </tbody>

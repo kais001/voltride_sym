@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Voiture;
+use App\Entity\ReservationVoiture;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,6 +21,20 @@ class VoitureRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Voiture::class);
     }
+
+    public function countReservationsByStateAndBrand(string $state): array
+    {
+        $query = $this->createQueryBuilder('r')
+            ->select('v.marque as car_brand, COUNT(r.idR) as reservation_count')
+            ->leftJoin('r.voiture', 'v') // Jointure avec l'entité Voiture
+            ->andWhere('r.etat = :state')
+            ->setParameter('state', $state)
+            ->groupBy('v.marque')
+            ->getQuery();
+    
+        return $query->getResult();
+    }
+
 
 //    /**
 //     * @return Voiture[] Returns an array of Voiture objects

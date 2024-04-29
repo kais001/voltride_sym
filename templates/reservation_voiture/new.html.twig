@@ -4,12 +4,37 @@
 
 {% block center %}
     <h1>Create new ReservationVoiture</h1>
-{{ form_start(form) }}
+    {{ form_start(form) }}
     {{ form_row(form.dateDebut) }}
     {{ form_row(form.dateFin) }}
-  
     {{ form_row(form.utilisateur) }}
- <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn" id="save-button">{{ button_label|default('Save') }}</button>
     <a href="{{ path('app_reservation_voiture_index') }}">back to list</a>
     {{ form_end(form) }}
+
+    <script>
+        // Récupérer le bouton "Save"
+        const saveButton = document.getElementById('save-button');
+
+        // Ajouter un gestionnaire d'événements pour le clic sur le bouton "Save"
+        saveButton.addEventListener('click', function() {
+            // Vérifier si les notifications sont prises en charge par le navigateur
+            if ("Notification" in window && Notification.permission === "granted") {
+                // Créer et afficher la notification
+                var notification = new Notification("Réservation enregistrée", {
+                    body: "Votre réservation a été enregistrée avec succès."
+                });
+            } else if ("Notification" in window && Notification.permission !== "denied") {
+                // Demander la permission d'envoyer des notifications
+                Notification.requestPermission().then(function(permission) {
+                    if (permission === "granted") {
+                        // Créer et afficher la notification
+                        var notification = new Notification("Réservation enregistrée", {
+                            body: "Votre réservation a été enregistrée avec succès."
+                        });
+                    }
+                });
+            }
+        });
+    </script>
 {% endblock %}
