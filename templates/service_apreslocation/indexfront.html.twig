@@ -1,0 +1,95 @@
+{% extends 'front/index.html.twig' %}
+
+{% block body %}
+<div style="text-align: center;">
+    <br>
+    <br>
+    <h1>Liste des Services Après Location</h1>
+    <div class="search-container" style="margin-bottom: 10px;">
+        <input type="text" id="search-input" placeholder="Rechercher...">
+    </div>
+
+    <div style="display: inline-block;">
+        <table id="service-table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Technicien</th>
+                    <th>Description</th>
+                    <th>Statut</th>
+                    <th>Coût</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set items_per_page = 5 %}
+                {% set total_items = service_apreslocations|length %}
+                {% set total_pages = (total_items / items_per_page)|round(0, 'ceil') %}
+                {% set current_page = app.request.query.get('page', 1) %}
+                {% set start_index = (current_page - 1) * items_per_page %}
+                {% set end_index = start_index + items_per_page %}
+
+                {% for service_apreslocation in service_apreslocations %}
+                    {% if service_apreslocation.statut == 'disponible' and service_apreslocation.idservice is not null %}
+                        {% if loop.index0 >= start_index and loop.index0 < end_index %}
+                            <tr class="service-row">
+                                <td>{{ service_apreslocation.type.typeName }}</td>
+                                <td>{{ service_apreslocation.technicien }}</td>
+                                <td>{{ service_apreslocation.description }}</td>
+                                <td>{{ service_apreslocation.statut }}</td>
+                                <td>{{ service_apreslocation.cout }}</td>
+                                <td>
+                                    <a href="{{ path('app_service_apreslocation_showfront', {'idservice': service_apreslocation.idservice}) }}" class="btn btn-primary">Information</a>
+                                    <form method="post" action="{{ path('app_evenement_participate', {'id': service_apreslocation.idservice}) }}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('participate' ~ service_apreslocation.idservice) }}">
+                                        <input type="submit" class="btn btn-success btn-sm btn-margin reserve-btn" value="Réserver">
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if total_pages > 1 %}
+    <div class="pagination-wrapper" style="display: flex; justify-content: center;">
+        <div class="pagination-container">
+            <div class="pagination">
+                {% if current_page > 1 %}
+                    <a href="?page={{ current_page - 1 }}">Previous</a>
+                {% endif %}
+                {% if current_page < total_pages %}
+                    <a href="?page={{ current_page + 1 }}">Next</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#search-input').on('input', function() {
+            const searchTerm = $(this).val().toLowerCase();
+            $('.service-row').each(function() {
+                let found = false;
+                $(this).find('td').each(function() {
+                    const cellText = $(this).text().toLowerCase();
+                    if (cellText.includes(searchTerm)) {
+                        found = true;
+                        return false;
+                    }
+                });
+                if (found) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+    </script>
+</div>
+{% endblock %}

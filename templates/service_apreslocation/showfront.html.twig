@@ -1,0 +1,87 @@
+{% extends 'front/index.html.twig' %}
+
+{% block body %}
+<div class="container text-center">
+    <br>
+    <br>
+    <br>
+    <img src="{{ asset('images/logo.png') }}" alt="Voltride Logo" style="width: 150px; margin-bottom: 20px;">
+    <h1 style="color: #006400;">ServiceAprèsLocation</h1>
+
+    <table style="margin: 0 auto; width: 80%; border-collapse: collapse; border: 1px solid #006400;">
+        <tbody>
+            <tr style="background-color: #006400; color: white;">
+                <th style="padding: 10px;">Type</th>
+                <td style="padding: 10px;">{{ service_apreslocation.type }}</td>
+            </tr>
+            <tr style="background-color: #f2f2f2;">
+                <th style="padding: 10px;">Technicien</th>
+                <td style="padding: 10px;">{{ service_apreslocation.technicien }}</td>
+            </tr>
+            <tr style="background-color: #ffffff;">
+                <th style="padding: 10px;">Description</th>
+                <td style="padding: 10px;">{{ service_apreslocation.description }}</td>
+            </tr>
+            <tr style="background-color: #f2f2f2;">
+                <th style="padding: 10px;">Statut</th>
+                <td style="padding: 10px;">{{ service_apreslocation.statut }}</td>
+            </tr>
+            <tr style="background-color: #ffffff;">
+                <th style="padding: 10px;">Cout</th>
+                <td style="padding: 10px;">{{ service_apreslocation.cout }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_service_apreslocation_list') }}" class="btn btn-primary" style="margin-top: 20px;">Back to list</a>
+    
+    {# JavaScript function to generate and download PDF #}
+    <button class="btn btn-primary" onclick="generatePDF(
+        '{{ service_apreslocation.type }}',
+        '{{ service_apreslocation.technicien }}',
+        '{{ service_apreslocation.description }}',
+        '{{ service_apreslocation.statut }}',
+        '{{ service_apreslocation.cout }}'
+    )" style="margin-top: 20px; background-color: #006400; border-color: #006400;">Download PDF</button>
+</div>
+
+{# JavaScript code to generate PDF using html2pdf library #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+<script>
+function generatePDF(type, technicien, description, statut, cout) {
+    const content = `
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="{{ asset('images/logo.png') }}" alt="Voltride Logo" style="width: 150px;">
+            <br>
+            <br>
+            <h1 style="color: #006400;">ServiceAprèsLocation</h1>
+        </div>
+        <table style="margin: 0 auto; width: 80%; border-collapse: collapse; border: 1px solid #006400;">
+            <tbody>
+                <tr style="background-color: #006400; color: white;">
+                    <th style="padding: 10px;">Type</th>
+                    <td style="padding: 10px;">${type}</td>
+                </tr>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="padding: 10px;">Technicien</th>
+                    <td style="padding: 10px;">${technicien}</td>
+                </tr>
+                <tr style="background-color: #ffffff;">
+                    <th style="padding: 10px;">Description</th>
+                    <td style="padding: 10px;">${description}</td>
+                </tr>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="padding: 10px;">Statut</th>
+                    <td style="padding: 10px;">${statut}</td>
+                </tr>
+                <tr style="background-color: #ffffff;">
+                    <th style="padding: 10px;">Cout</th>
+                    <td style="padding: 10px;">${cout}</td>
+                </tr>
+            </tbody>
+        </table>
+    `;
+    html2pdf().from(content).save();
+}
+</script>
+{% endblock %}

@@ -20,6 +20,20 @@ class ServiceApreslocationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ServiceApreslocation::class);
     }
+    public function findBySearchTerm(string $searchTerm): array
+    {
+        if (empty($searchTerm)) {
+            return [];
+        }
+
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.type', 't')
+            ->andWhere('t.typeName LIKE :searchTerm')
+            ->setParameter('searchTerm', '%'.$searchTerm.'%')
+            ->getQuery()
+            ->getResult();
+    }
+}
 
 //    /**
 //     * @return ServiceApreslocation[] Returns an array of ServiceApreslocation objects
@@ -45,4 +59,4 @@ class ServiceApreslocationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-}
+

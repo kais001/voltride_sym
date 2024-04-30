@@ -16,4 +16,10 @@ class FrontController extends AbstractController
             'controller_name' => 'FrontController',
         ]);
     }
+    #[Route('/indexfront', name: 'app_index_front')]
+public function indexFront(): Response
+{
+    return $this->render('indexfront.html.twig');
+}
+
 }

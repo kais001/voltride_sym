@@ -1,55 +1,60 @@
 
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="author" content="Untree.co">
-  <link rel="shortcut icon" href="images/LOGO.png">
+	<!doctype html>
+	<html lang="en">
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Untree.co">
+	<link rel="shortcut icon" href="{{asset('images/LOGO.png')}}">
 
-  <meta name="description" content="" />
-  <meta name="keywords" content="bootstrap, bootstrap4" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="bootstrap, bootstrap4" />
 
-		<!-- Bootstrap CSS -->
-		<link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-		<link href="css/tiny-slider.css" rel="stylesheet">
-		<link href="css/style.css" rel="stylesheet">
-		<title>Voltride</title>
-	</head>
+			<!-- Bootstrap CSS -->
+			{% block css%}
+			<link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+			<link href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css')}}" rel="stylesheet">
+			<link href="{{asset('css/tiny-slider.css')}}" rel="stylesheet">
+			<link href="{{asset('css/style.css')}}" rel="stylesheet">
+			{% endblock %} 
+			<title>Voltride</title>
+			
+		</head>
 
-	<body>
+		<body>
 
-		<!-- Start Header/Navigation -->
-		<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+			<!-- Start Header/Navigation -->
+			<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
 
-			<div class="container">
-				<img src="images/LOGO.png" alt="Logo Voltride" class="logo">
-				<a class="navbar-brand" href="index.html">Voltride<span>.</span></a>
+				<div class="container">
+					<img src="{{asset('images/LOGO.png')}}" alt="Logo Voltride" class="logo">
+					<a class="navbar-brand" href="index.html">Voltride<span>.</span></a>
 
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
 
-				<div class="collapse navbar-collapse" id="navbarsFurni">
-					<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-						<li class="nav-item active">
-							<a class="nav-link" href="index.html">Home</a>
-						</li>
-						<li><a class="nav-link" href="">Reserver Voiture</a></li>
-						<li><a class="nav-link" href="">Reserver Borne</a></li>
-						<li><a class="nav-link" href="">Reserver Evenement</a></li>
-						<li><a class="nav-link" href="">Service aprés vente</a></li>
-					</ul>
+					<div class="collapse navbar-collapse" id="navbarsFurni">
+						<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+							<li class="nav-item active">
+								<a class="nav-link" href="index.html">Home</a>
+							</li>
+							<li><a class="nav-link" href="">Reserver Voiture</a></li>
+							<li><a class="nav-link" href="">Reserver Borne</a></li>
+							<li><a class="nav-link" href="">Reserver Evenement</a></li>
+							<li><a class="nav-link" href="{{ path('app_service_apreslocation_list') }}">Service après vente</a></li>
+	</ul>
 
-					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-						<li><a class="nav-link" href="#"><img src="images/user.svg"></a></li>
-					</ul>
+						<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+							<li><a class="nav-link" href="#"><img src="{{asset('images/user.svg')}}"></a></li>
+						</ul>
+					</div>
 				</div>
-			</div>
-				
-		</nav>
+					
+			</nav>
 		<!-- End Header/Navigation -->
+{% block body %}
+	
 
 		<!-- Start Hero Section -->
 			<div class="hero">
@@ -64,7 +69,7 @@
 						</div>
 						<div class="col-lg-7">
 							<div class="hero-img-wrap">
-								<img src="images/1.png" class="img-fluid">
+								<img src="{{('images/1.png')}}" class="img-fluid">
 							</div>
 						</div>
 					</div>
@@ -87,17 +92,17 @@
 							<div class="col-6 col-md-6">
 								<div class="feature">
 									<div class="icon">
-										<img src="images/truck.svg" alt="Image" class="imf-fluid">
+										<img src="{{asset('images/truck.svg')}}" alt="Image" class="imf-fluid">
 									</div>
 									<h3>Fast &amp; Livraison Rapide et Gratuite</h3>
 									<p>Profitez d'une livraison rapide et gratuite pour votre voiture électrique réservée. Nous nous efforçons de vous offrir un service efficace et pratique, vous permettant de profiter rapidement de votre nouvelle expérience de conduite.</p>
 								</div>
 							</div>
-
+ 
 							<div class="col-6 col-md-6">
 								<div class="feature">
 									<div class="icon">
-										<img src="images/bag.svg" alt="Image" class="imf-fluid">
+										<img src="{{asset('images/bag.svg')}}" alt="Image" class="imf-fluid">
 									</div>
 									<h3>Facilité d'Utilisation</h3>
 									<p>Parcourez notre vaste sélection de voitures électriques et réservez facilement celle qui correspond le mieux à vos besoins. Notre processus de réservation simple et intuitif vous permet de trouver et de réserver votre voiture idéale en quelques clics seulement.</p>
@@ -107,7 +112,7 @@
 							<div class="col-6 col-md-6">
 								<div class="feature">
 									<div class="icon">
-										<img src="images/support.svg" alt="Image" class="imf-fluid">
+										<img src="{{asset('images/support.svg')}}" alt="Image" class="imf-fluid">
 									</div>
 									<h3>24/7 Support</h3>
 									<p>Notre équipe de support dévouée est disponible 24/7 pour répondre à toutes vos questions et vous fournir une assistance professionnelle à tout moment. Nous sommes là pour vous accompagner à chaque étape de votre expérience de location de voiture électrique.</p>
@@ -117,7 +122,7 @@
 							<div class="col-6 col-md-6">
 								<div class="feature">
 									<div class="icon">
-										<img src="images/return.svg" alt="Image" class="imf-fluid">
+										<img src="{{asset('images/return.svg')}}" alt="Image" class="imf-fluid">
 									</div>
 									<h3>Retours Sans Tracas</h3>
 									<p>Nous garantissons des retours sans tracas pour vous offrir une tranquillité d'esprit totale. Si jamais vous rencontrez le moindre problème avec votre voiture électrique, notre équipe est là pour vous aider à trouver rapidement une solution adaptée à vos besoins.</p>
@@ -129,7 +134,7 @@
 
 					<div class="col-lg-5">
 						<div class="img-wrap">
-							<img src="images/5.jpg" alt="Image" class="img-fluid">
+							<img src="{{asset('images/5.jpg')}}" alt="Image" class="img-fluid">
 						</div>
 					</div>
 
@@ -144,9 +149,9 @@
 				<div class="row justify-content-between">
 					<div class="col-lg-7 mb-5 mb-lg-0">
 						<div class="imgs-grid">
-							<div class="grid grid-1"><img src="images/3.jpg" alt="Untree.co"></div>
-							<div class="grid grid-2"><img src="images/2.png" alt="Untree.co"></div>
-							<div class="grid grid-3"><img src="images/4.jpg" alt="Untree.co"></div>
+							<div class="grid grid-1"><img src="{{asset('images/3.jpg')}}" alt="Untree.co"></div>
+							<div class="grid grid-2"><img src="{{asset('images/2.png')}}" alt="Untree.co"></div>
+							<div class="grid grid-3"><img src="{{asset('images/4.jpg')}}" alt="Untree.co"></div>
 						</div>
 					</div>
 					<div class="col-lg-5 ps-lg-5">
@@ -191,11 +196,13 @@
 			</div>
 		</footer>
 		<!-- End Footer Section -->	
-
-
-		<script src="js/bootstrap.bundle.min.js"></script>
-		<script src="js/tiny-slider.js"></script>
-		<script src="js/custom.js"></script>
+{% endblock %}
+		{% block js %}
+		<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+		<script src="{{asset('js/tiny-slider.js')}}"></script>
+		<script src="{{asset('js/custom.js')}}"></script>
+		{% endblock %}
 	</body>
+	
 
 </html>

@@ -21,3 +21,19 @@ app_z:
     path: /z
     controller: 'App\Controller\TypeController::index'
     methods: ['GET']
+app_service_apreslocation_list:
+    path: /list
+    controller: 'App\Controller\ServiceApreslocationController::list'
+    methods: ['GET']    
+app_service_apreslocation_showfront:
+    path: /front/{idservice}
+    controller: 'App\Controller\ServiceApreslocationController::showfront'
+    methods: ['GET']
+app_index_front:
+    path: /indexfront
+    controller: 'App\Controller\FrontController::indexFront'
+    methods: ['GET']
+app_service_apreslocation_indexfront:
+    path: /indexfront
+    controller: App\Controller\ServiceApreslocationController::indexFront
+    methods: ['GET']

@@ -3,7 +3,10 @@
 	<head>
 		<!-- Basic Page Info -->
 		<meta charset="utf-8" />
-		<title>Voltride
+	
+		
+	
+		<title>{% block title %}Voltride{% endblock %}
 			
 		</title>
 
@@ -63,7 +66,7 @@
 				<div class="loader-logo small-logo"> <!-- Ajoutez la classe "small-logo" -->
 					<img src="vendors/images/LOGO.png" alt="" />
 				</div>
-				{% endblock %}
+				
 				<div class="loader-progress" id="progress_div">
 					<div class="bar" id="bar1"></div>
 				</div>
@@ -71,7 +74,7 @@
 				<div class="loading-text">Loading...</div>
 			</div>
 		</div>
-		
+		{% endblock %}
  
 		<div class="header">
 			<div class="header-left">

@@ -1,4 +1,7 @@
+
 {% extends 'back/back.html.twig' %}
+
+{% block title %}ServiceAprèsLocation{% endblock %}
 
 {% block body %}
 <br>
@@ -23,4 +26,9 @@
             </div>
         </div>
     </div>
+    <ul class="submenu">
+    <li><a href="{{ path('app_service_apreslocation_index') }}">Service après vente</a></li>
+    <li><a href="{{ path('app_z') }}">Type de Service après vente</a></li>
+</ul>
+
 {% endblock %}
