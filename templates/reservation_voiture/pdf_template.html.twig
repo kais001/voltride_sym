@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Réservation de voiture</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        .container {
+            width: 70%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+        .reservation-details {
+            margin-bottom: 20px;
+        }
+        .label {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .value {
+            font-size: 18px;
+        }
+        .highlight {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="C:/Users/charef/Desktop/LOGO.png" alt="Logo" class="logo">
+            <h1>Réservation de voiture</h1>
+        </div>
+        <div class="reservation-details">
+            <p class="label">ID de réservation:</p>
+            <p class="value highlight">{{ reservation_voiture.idR }}</p>
+        </div>
+        <div class="reservation-details">
+            <p class="label">Date de début:</p>
+            <p class="value">{{ reservation_voiture.dateDebut ? reservation_voiture.dateDebut|date('Y-m-d') : '' }}</p>
+        </div>
+        <div class="reservation-details">
+            <p class="label">Date de fin:</p>
+            <p class="value">{{ reservation_voiture.dateFin ? reservation_voiture.dateFin|date('Y-m-d') : '' }}</p>
+        </div>
+        <div class="reservation-details">
+            <p class="label">Voiture:</p>
+            <p class="value">{{ reservation_voiture.voiture.marque }} {{ reservation_voiture.voiture.modele }}</p>
+        </div>
+        <div class="reservation-details">
+            <p class="label">Marque:</p>
+            <p class="value">{{ reservation_voiture.voiture.marque }}</p>
+        </div>
+        <div class="reservation-details">
+            <p class="label">Modèle:</p>
+            <p class="value">{{ reservation_voiture.voiture.modele }}</p>
+        </div>
+        <div class="reservation-details">
+            <p class="label">État:</p>
+            <p class="value">{{ reservation_voiture.voiture.etat }}</p>
+        </div>
+        <div class="reservation-details">
+            <p class="label">Prix de location:</p>
+            <p class="value">{{ reservation_voiture.voiture.prixLocation }}</p>
+        </div>
+        <div class="reservation-details">
+            <p class="label">Kilométrage:</p>
+            <p class="value">{{ reservation_voiture.voiture.kilometrage }}</p>
+        </div>
+    </div>
+</body>
+</html>

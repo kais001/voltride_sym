@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voiture index{% endblock %}
+
+{% block center %}
+    <div class="main-container">
+
+        <div class="white-frame"> <!-- Div avec cadre blanc -->
+            <div class="table-container"> <!-- Div pour centrer le tableau -->
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>IdV</th>
+                            <th>Marque</th>
+                            <th>Modele</th>
+                            <th>Etat</th>
+                            <th>PrixLocation</th>
+                            <th>Kilometrage</th>
+                            <th>Image</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for voiture in voitures %}
+                        <tr>
+                            <td>{{ voiture.idV }}</td>
+                            <td>{{ voiture.marque }}</td>
+                            <td>{{ voiture.modele }}</td>
+                            <td>{{ voiture.etat }}</td>
+                            <td>{{ voiture.prixLocation }}</td>       
+                            <td>{{ voiture.kilometrage }}</td>
+                            <td>{{ voiture.image }}</td>
+                            <td>
+                                
+                                  {{ include('voiture/_delete_form.html.twig') }}
+                                <a href="{{ path('app_voiture_edit', {'idV': voiture.idV}) }}">edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="8">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <br> <!-- Saut de ligne -->
+        
+        <a href="{{ path('app_voiture_new') }}">Create new</a>
+    </div>
+{% endblock %}

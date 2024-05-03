@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistiques des voitures par marque{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var stats = {{ stats|json_encode|raw }};
+            var labels = [];
+            var data = [];
+
+            stats.forEach(function (stat) {
+                labels.push(stat.marque);
+                data.push(stat.nombre);
+            });
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Nombre de voitures',
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <h1>Statistiques des voitures par marque</h1>
+    <canvas id="myChart" width="400" height="200"></canvas>
+{% endblock %}

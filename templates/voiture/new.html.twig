@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter Voiture{% endblock %}
+
+{% block center %}
+    <div class="main-container">
+        <div class="white-frame">
+            <div class="content">
+                <h1>Ajouter une Voiture</h1>
+
+                <div class="form-container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            {{ form_start(form) }}
+                            {{ form_row(form.marque) }}
+                            {{ form_row(form.modele) }}
+                            {{ form_row(form.etat) }}
+                            {{ form_row(form.prixLocation) }}
+                            {{ form_row(form.kilometrage) }}
+                            {{ form_row(form.image) }}
+                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+
+                <a href="{{ path('app_voiture_index') }}">Retour à la liste</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

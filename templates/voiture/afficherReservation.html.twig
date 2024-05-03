@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ReservationVoiture index{% endblock %}
+
+{% block center %}
+    <div class="main-container">
+        <div class="white-frame">
+        <h1>listes des reservations</h1>
+            <div class="content">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>IdR</th>
+                                <th>DateDebut</th>
+                                <th>DateFin</th>
+                                <th>Voiture</th>
+                                <th>Marque</th>
+                                <th>Modele</th>
+                                <th>Etat</th>
+                                <th>PrixLocation</th>
+                                <th>Kilometrage</th>
+                            
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reservation_voiture in reservation_voitures %}
+                                <tr>
+                                    <td>{{ reservation_voiture.idR }}</td>
+                                    <td>{{ reservation_voiture.dateDebut ? reservation_voiture.dateDebut|date('Y-m-d') : '' }}</td>
+                                    <td>{{ reservation_voiture.dateFin ? reservation_voiture.dateFin|date('Y-m-d') : '' }}</td>
+                                    <td>{{ reservation_voiture.voiture.marque }} {{ reservation_voiture.voiture.modele }}</td>
+                                    <td>{{ reservation_voiture.voiture.marque }}</td>
+                                    <td>{{ reservation_voiture.voiture.modele }}</td>
+                                    <td>{{ reservation_voiture.voiture.etat }}</td>
+                                    <td>{{ reservation_voiture.voiture.prixLocation }}</td>
+                                    <td>{{ reservation_voiture.voiture.kilometrage }}</td>
+                                    <td>
+                                       
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="10">no records found</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+            
+            </div>
+        </div>
+    </div>
+{% endblock %}
