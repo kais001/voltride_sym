@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Borne{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Add spacing between form fields and buttons */
+        .form-control,
+        .btn {
+            margin-bottom: 50px; /* Add margin bottom */
+        }
+
+        /* Reduce width of form fields */
+        .form-control {
+            width: calc(100% - 20px); /* Adjust width as needed */
+        }
+    </style>
+{% endblock %}
+
+{% block center %}
+    <div class="content" style=" padding: 50px; border-radius: 30px; width: 75%;">
+        <h1>Create new Borne</h1>
+        <div class="table-container">
+            {{ form_start(form) }}
+            {{ form_row(form.emplacement, {'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.capacite, {'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.etat, {'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.dateInst, {'attr': {'class': 'form-control'}}) }}
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="{{ path('app_borne_index') }}" class="btn btn-secondary">Cancel</a>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

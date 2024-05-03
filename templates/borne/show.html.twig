@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Borne{% endblock %}
+
+{% block body %}
+    <h1>Borne</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ borne.id }}</td>
+            </tr>
+            <tr>
+                <th>Emplacement</th>
+                <td>{{ borne.emplacement }}</td>
+            </tr>
+            <tr>
+                <th>Capacite</th>
+                <td>{{ borne.capacite }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ borne.etat }}</td>
+            </tr>
+            <tr>
+                <th>DateInst</th>
+                <td>{{ borne.dateInst ? borne.dateInst|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_borne_index') }}">back to list</a>
+
+    <a href="{{ path('app_borne_edit', {'id': borne.id}) }}">edit</a>
+
+    {{ include('borne/_delete_form.html.twig') }}
+{% endblock %}

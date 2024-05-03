@@ -1,0 +1,114 @@
+{% block center %}
+<div class="main-container">
+    <div class="white-frame">
+        <input type="text" id="searchInput" placeholder="Search...">
+        <select id="searchCriteria">
+            <option value="2">Emplacement</option>
+            <option value="3">Capacité</option>
+            <option value="4">Etat</option>
+            <option value="5">Date d'installation</option>
+        </select>
+        <!-- Button to trigger statistics display -->
+        <button id="showStatisticsBtn" class="btn btn-primary" style="margin-top: 10px;"
+                data-statistics-url="{{ path('app_borne_statistics') }}">
+            Show Statistics
+        </button>
+
+        <div class="table-container">
+            <h1>Borne index</h1>
+            <!-- Table displaying Borne data -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Emplacement</th>
+                        <th>Capacité</th>
+                        <th>Etat</th>
+                        <th>Date d'installation</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for borne in bornes %}
+                    <tr>
+                        <td>{{ borne.id }}</td>
+                        <td>{{ borne.emplacement }}</td>
+                        <td>{{ borne.capacite }}</td>
+                        <td>{{ borne.etat }}</td>
+                        <td>{{ borne.dateInst ? borne.dateInst|date('Y-m-d') : '' }}</td>
+                        <td class="button-group">
+                            <div class="btn-group">
+                                <!-- Edit and Delete buttons -->
+                                <form method="post" action="{{ path('app_borne_delete', {'id': borne.id}) }}"
+                                      onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ borne.id) }}">
+                                    <a href="{{ path('app_borne_edit', {'id': borne.id}) }}" class="btn btn-info">Edit</a>
+                                    <button type="submit" class="btn btn-danger" style="margin-left: 3px;">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6">No records found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<a href="{{ path('app_borne_new') }}" class="btn btn-secondary" style="margin-top: 20px;">Create new</a>
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const showStatisticsBtn = document.getElementById('showStatisticsBtn');
+
+        // Event listener for button click to show statistics
+        showStatisticsBtn.addEventListener('click', function() {
+            const statisticsUrl = this.getAttribute('data-statistics-url'); // Retrieve URL from button attribute
+
+            // Fetch statistics data via AJAX
+            fetch(statisticsUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const labels = data.labels;
+                    const dataset = data.data;
+
+                    // Create Chart.js chart
+                    const ctx = document.createElement('canvas').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Statistics',
+                                data: dataset,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                    // Display chart in a pop-up window
+                    const chartWindow = window.open('', '_blank', 'width=800,height=600');
+                    chartWindow.document.body.appendChild(ctx.canvas);
+                })
+                .catch(error => {
+                    console.error('Error fetching statistics:', error);
+                });
+        });
+    });
+</script>
+{% endblock %}

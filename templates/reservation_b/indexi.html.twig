@@ -1,0 +1,56 @@
+{% extends 'baseF.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block center %}
+    <h1>ReservationB index</h1>
+    <div>
+        <a href="{{ path('calendar') }}" class="btn btn-primary">Show Calendar</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                    
+                <th>DateDebut</th>
+                <th>DateFin</th>
+                <th>HeureDebut</th>
+                <th>HeureFin</th>
+                <th>Emplacement</th>
+                <th>Capacité</th>
+                <th>Etat</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation_b in reservation_bs %}
+            <tr>
+                
+                <td>{{ reservation_b.dateDebut ? reservation_b.dateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation_b.dateFin ? reservation_b.dateFin|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation_b.heureDebut ? reservation_b.heureDebut|date('H:i:s') : '' }}</td>
+                <td>{{ reservation_b.heureFin ? reservation_b.heureFin|date('H:i:s') : '' }}</td>
+                <td>{{ reservation_b.borne.emplacement }}</td>
+                <td>{{ reservation_b.borne.capacite }}</td>
+                <td>{{ reservation_b.borne.etat }}</td>
+                
+                <td class="button-group">
+                    <div class="btn-group">
+                    <form method="post" action="{{ path('app_reservation_b_delete', {'idR':reservation_b.idR}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reservation_b.idR) }}">
+                        <a href="{{ path('app_reservation_b_edit', {'idR': reservation_b.idR}) }}" class="btn btn-info">Edit</a>
+                        <button type="submit" class="btn btn-danger" style="margin-left: 3px;">Delete</button>
+                       
+                    </form>
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

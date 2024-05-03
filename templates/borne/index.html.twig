@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Borne{% endblock %}
+
+{% block center %}
+<div class="main-container">
+    <div class="white-frame">
+        <input type="text" id="searchInput" placeholder="Search...">
+        <select id="searchCriteria">
+            <option value="2">Emplacement</option>
+            <option value="3">Capacité</option>
+            <option value="4">Etat</option>
+            <option value="5">Date d'installation</option>
+        </select>
+        <div class="table-container">
+            <h1>Borne index</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Emplacement</th>
+                        <th>Capacité</th>
+                        <th>Etat</th>
+                        <th>Date d'installation</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for borne in bornes %}
+                    <tr>
+                        <td>{{ borne.id }}</td>
+                        <td>{{ borne.emplacement }}</td>
+                        <td>{{ borne.capacite }}</td>
+                        <td>{{ borne.etat }}</td>
+                        <td>{{ borne.dateInst ? borne.dateInst|date('Y-m-d') : '' }}</td>
+                        <td class="button-group">
+                            <div class="btn-group">
+                                <form method="post" action="{{ path('app_borne_delete', {'id': borne.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ borne.id) }}">
+                                    <a href="{{ path('app_borne_edit', {'id': borne.id}) }}" class="btn btn-info">Edit</a>
+                                    <button type="submit" class="btn btn-danger" style="margin-left: 3px;">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6">no records found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<a href="{{ path('app_borne_new') }}" class="btn btn-secondary" style="margin-top: 20px;">Create new</a>
+<a href="{{ path('generate_pdf') }}" class="btn btn-primary" style="margin-top: 20px;" target="_blank">Download PDF</a>
+
+<script>
+    
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const searchCriteriaSelect = document.getElementById('searchCriteria');
+    const rows = document.querySelectorAll('.table tbody tr');
+
+    // Function to perform search based on selected criteria
+    function performSearch() {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        const selectedCriteria = searchCriteriaSelect.value;
+
+        rows.forEach(row => {
+            const cell = row.querySelector(`td:nth-child(${selectedCriteria})`); // Selects the specified cell based on criteria
+
+            if (cell) {
+                const cellText = cell.textContent.trim().toLowerCase();
+                const rowMatchesSearch = cellText.includes(searchTerm);
+                row.style.display = rowMatchesSearch ? '' : 'none';
+            }
+        });
+    }
+
+    // Event listener for search input changes
+    searchInput.addEventListener('input', performSearch);
+
+    // Event listener for search criteria changes
+    searchCriteriaSelect.addEventListener('change', performSearch);
+
+    // Hide suggestions when clicking outside the input and suggestions
+    document.addEventListener('click', function(event) {
+        const isClickInsideInput = searchInput.contains(event.target);
+        const isClickInsideSuggestion = document.querySelector('.suggestion-container').contains(event.target);
+
+        if (!isClickInsideInput && !isClickInsideSuggestion) {
+            document.querySelector('.suggestion-container').innerHTML = ''; // Clear suggestions if click is outside input and suggestions
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>La liste des Bornes de recharge</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo-container img {
+            max-width: 1024px; /* Adjust the maximum width of the logo */
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="{{ asset('images/LOGO.png') }}" alt="Logo">
+
+    </div>
+    <h1>La liste des Bornes de recharge</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Emplacement</th>
+                <th>Capacité</th>
+                <th>État</th>
+                <th>Date d'installation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for borne in bornes %}
+                <tr>
+                    <td>{{ borne.id }}</td>
+                    <td>{{ borne.emplacement }}</td>
+                    <td>{{ borne.capacite }}</td>
+                    <td>{{ borne.etat }}</td>
+                    <td>{{ borne.dateInst ? borne.dateInst|date('Y-m-d') : '' }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block center %}
+
+<div class="content" style=" padding: 80px; border-radius: 30px; width: 80%;">
+        <h1>La liste des Bornes </h1>
+        <div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdR</th>
+                <th>DateDebut</th>
+                <th>DateFin</th>
+                <th>HeureDebut</th>
+                <th>HeureFin</th>
+                <th>Emplacement</th>
+                <th>Capacité</th>
+                <th>Etat</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation_b in reservation_bs %}
+            <tr>
+                <td>{{ reservation_b.idR }}</td>
+                <td>{{ reservation_b.dateDebut ? reservation_b.dateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation_b.dateFin ? reservation_b.dateFin|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation_b.heureDebut ? reservation_b.heureDebut|date('H:i:s') : '' }}</td>
+                <td>{{ reservation_b.heureFin ? reservation_b.heureFin|date('H:i:s') : '' }}</td>
+                <td>{{ reservation_b.borne.emplacement }}</td>
+                <td>{{ reservation_b.borne.capacite }}</td>
+                <td>{{ reservation_b.borne.etat }}</td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+
+
+{% endblock %}

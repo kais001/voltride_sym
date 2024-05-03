@@ -1,0 +1,45 @@
+{% extends 'baseF.html.twig' %}
+
+{% block title %}Borne{% endblock %}
+
+{% block center %}
+<div class="main-container">
+    <div class="white-frame">
+        <div class="table-container">
+            <h1>Borne index</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Emplacement</th>
+                        <th>Capacité</th>
+                        <th>Etat</th>
+                        <th>Date d'installation</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for borne in bornes %}
+                        {% if borne.etat == 'Disponible' %}
+                            <tr>
+                                <td>{{ borne.emplacement }}</td>
+                                <td>{{ borne.capacite }}</td>
+                                <td>{{ borne.etat }}</td>
+                                <td>{{ borne.dateInst ? borne.dateInst|date('Y-m-d') : '' }}</td>
+                                <td class="button-group">
+                                    <div class="btn-group">
+                                        <form method="post" action="{{ path('app_borne_delete', {'id': borne.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ borne.id) }}">
+                                            <a href="{{ path('app_reservation_borne_new', {'id': borne.id}) }}" class="btn btn-secondary">Réserver</a>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <a href="{{ path('app_reservation_b_indexi') }}" class="btn btn-secondary">Afficher les réservations</a>
+</div>
+{% endblock %}
