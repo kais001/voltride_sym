@@ -1,0 +1,87 @@
+{% extends 'baseF.html.twig' %}
+
+{% block title %}Reservation {% endblock %}
+
+{% block center %}
+
+<div class="hero">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="table-container">
+                <h2>Liste Des Réservations</h2>
+                <table class="table" id="reservationTable">
+                    <thead>
+                         <h1></h1>
+    <p>Total Des Reservations: {{ totalReservations }}</p>
+    <p>Total Des Personnes: {{ totalPersons }}</p>
+                        <tr>
+                            <th>type</th>
+                            <th>adresseEvenement</th>
+                            <th>placesDispo</th>
+                            <th>dateEvenement</th>
+                            <th id="sortByNbrPersonne" class="sortable">nbrPersonne ▲</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reservation in reservation_e %}
+                            <tr>
+                                <td>{{ reservation.evenement.type }}</td>
+                                <td>{{ reservation.evenement.adresseEvenement }}</td>
+                                <td>{{ reservation.evenement.PlacesDispo }}</td>
+                                <td>{{ reservation.evenement.dateEvenement ? reservation.evenement.dateEvenement|date('Y-m-d') : '' }}</td>
+                                <td>{{ reservation.nbrPersonne }}</td>
+                                <td>
+                                    <a href="{{ path('app_reservation_e_show', {'id_e': reservation.id_e}) }}" class="btn btn-primary">Afficher</a>
+                                    <a href="{{ path('app_reservation_e_edit', {'id_e': reservation.id_e}) }}" class="btn btn-primary">Modifier</a>
+                                    <a href="{{ path('app_reservation_e_new') }}" class="btn btn-primary">Reserver</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6">Aucun enregistrement trouvé</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to toggle sort direction
+    function toggleSortDirection(sortByColumn) {
+        var currentSortDirection = sortByColumn.dataset.sortDirection;
+        sortByColumn.dataset.sortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+    }
+
+    // Function to sort table data
+    function sortTableData() {
+        var table = document.getElementById('reservationTable');
+        var rows = table.getElementsByTagName('tr');
+        var sorted = [];
+        for (var i = 1; i < rows.length; i++) {
+            sorted.push(rows[i]);
+        }
+        var sortByColumn = document.getElementById('sortByNbrPersonne');
+        var sortDirection = sortByColumn.dataset.sortDirection;
+
+        sorted.sort(function(a, b) {
+            var aValue = parseInt(a.cells[4].innerText);
+            var bValue = parseInt(b.cells[4].innerText);
+            return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
+        });
+
+        for (var i = 0; i < sorted.length; i++) {
+            table.appendChild(sorted[i]);
+        }
+
+        toggleSortDirection(sortByColumn);
+    }
+
+    // Event listener for sorting
+    document.getElementById('sortByNbrPersonne').addEventListener('click', sortTableData);
+</script>
+
+{% endblock %}

@@ -46,10 +46,13 @@ class Utilisateur
     #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $dateInscription;
 
-    #[ORM\Column(length: 100)]
-    private ?string $image;
+
 
     // Autres propriétés de l'utilisateur
+    public function __construct()
+    {
+        
+    }
 
     public function getId_u(): ?int
     {
@@ -122,15 +125,9 @@ class Utilisateur
         return $this;
     }
 
-    public function getImage(): ?string
+    public function __toString()
     {
-        return $this->image;
-    }
-
-    public function setImage(?string $image): self
-    {
-        $this->image = $image;
-        return $this;
+        return 'ID: ' . $this->id_u . ', Cin: ' . $this->cin . ', Nom: ' . $this->nom . ', Prénom: ' . $this->prenom . ', Email: ' . $this->email;
     }
 
     

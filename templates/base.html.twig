@@ -295,8 +295,8 @@
                     <span class="mtext">Gestion Utilisateurs</span>
                 </a>
                 <ul class="submenu">
-                    <li><a href="{{ path('admin') }}">Gestion Admins</a></li>
-                    <li><a href="{{ path('utilisateur') }}">Gestion Clients</a></li>
+                    <li><a href="{{ path('app_admin_index') }}">Gestion Admins</a></li>
+                    <li><a href="{{ path('app_utilisateur_index') }}">Gestion Clients</a></li>
                 </ul>
             </li>
 
@@ -374,7 +374,7 @@
 		</div>
 
 		
-        {% block body %}
+        {% block center %}
     <div class="main-container">
 	 <div class="content">
         <div class="white-frame">

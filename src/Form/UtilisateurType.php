@@ -17,13 +17,9 @@ class UtilisateurType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('email')
-            ->add('motDePasse')
-            ->add('image', FileType::class, [
-                'label' => 'Image (PNG, JPEG)', // Libellé du champ
-                'mapped' => false, // Le champ n'est pas mappé directement à une propriété de l'entité Utilisateur
-                'required' => false, // Le champ n'est pas obligatoire
-            ])
-        ;
+            ->add('motDePasse');
+            
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void

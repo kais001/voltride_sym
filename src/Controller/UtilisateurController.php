@@ -13,15 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use DateTime;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Security\CustomPasswordEncoder; // Importez la classe CustomPasswordEncoder
+use App\Service\UserExcelExporter;
+
 
 #[Route('/utilisateur')]
 class UtilisateurController extends AbstractController
 {
     private $passwordEncoder;
+    private $userExcelExporter; // Ajoutez une propriété pour le service UserExcelExporter
 
-    public function __construct(CustomPasswordEncoder $passwordEncoder)
+    public function __construct(CustomPasswordEncoder $passwordEncoder, UserExcelExporter $userExcelExporter)
     {
         $this->passwordEncoder = $passwordEncoder;
+        $this->userExcelExporter = $userExcelExporter; // Injectez le service UserExcelExporter
     }
 
     #[Route('/', name: 'app_utilisateur_index', methods: ['GET'])]
@@ -29,7 +33,6 @@ class UtilisateurController extends AbstractController
     {
         return $this->render('utilisateur/index.html.twig', [
             'utilisateurs' => $utilisateurRepository->findAll(),
-            
         ]);
     }
 
@@ -39,7 +42,7 @@ class UtilisateurController extends AbstractController
         $utilisateur = new Utilisateur();
         
         // Assigner la date d'inscription actuelle à l'utilisateur
-        $utilisateur->setDateInscription(new DateTime());
+        $utilisateur->setDateInscription(new \DateTime());
         
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
@@ -54,32 +57,26 @@ class UtilisateurController extends AbstractController
             // Stocker le mot de passe crypté dans l'entité Utilisateur
             $utilisateur->setMotDePasse($encodedPassword);
             
-            // Récupérer le fichier image soumis dans le formulaire
-            $imageFile = $form->get('image')->getData();
-            
-            // Vérifier si un fichier a été soumis
-            if ($imageFile instanceof UploadedFile) {
-                // Obtenir le chemin absolu du fichier
-                $imageAbsolutePath = $imageFile->getPathname();
-                
-                // Stocker le chemin absolu de l'image dans l'entité Utilisateur
-                $utilisateur->setImage($imageAbsolutePath);
-            }
+  
     
             // Enregistrer l'utilisateur en base de données
             $entityManager->persist($utilisateur);
             $entityManager->flush();
             
+            // Exporter les utilisateurs vers Excel après chaque ajout
+            $this->userExcelExporter->exportUsersToExcel();
+
             // Rediriger vers la page d'index des utilisateurs
             return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
         }
-    
+
         // Afficher le formulaire de création d'utilisateur
         return $this->renderForm('utilisateur/new.html.twig', [
             'utilisateur' => $utilisateur,
             'form' => $form,
         ]);
     }
+
     
     
     
@@ -110,17 +107,7 @@ class UtilisateurController extends AbstractController
 
     if ($form->isSubmitted() && $form->isValid()) {
         // Récupérer le fichier image soumis dans le formulaire
-        $imageFile = $form->get('image')->getData();
-        
-        // Vérifier si un fichier a été soumis
-        if ($imageFile instanceof UploadedFile) {
-            // Obtenir le chemin absolu du fichier
-            $imageAbsolutePath = $imageFile->getPathname();
-            
-            // Mettre à jour le chemin absolu de l'image dans l'entité Utilisateur
-            $utilisateur->setImage($imageAbsolutePath);
-        }
-
+       
         // Enregistrer les modifications de l'utilisateur en base de données
         $entityManager->flush();
 

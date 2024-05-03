@@ -22,4 +22,12 @@ services:
 
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones
-# config/services.yaml
+
+  # Service definition for UserExcelExporter
+  App\Service\UserExcelExporter:
+    arguments:
+      $entityManager: "@doctrine.orm.entity_manager"
+
+  # Service definition for Google\Client
+  Google\Client:
+    class: Google\Client

@@ -2,7 +2,7 @@
 
 {% block title %}Admin index{% endblock %}
 
-{% block body %}
+{% block center %}
 <div class="main-container">
     <div class="white-frame">
         <div class="content">
@@ -17,7 +17,6 @@
                         <th>Email</th>
                         <th>Mot de passe</th>
                         <th>Date d'inscription</th>
-                        <th>Image</th>
                         <th>Département</th>
                         <th>Actions</th>
                     </tr>
@@ -31,11 +30,7 @@
                         <td>{{ admin.utilisateur.email }}</td>
                         <td>{{ admin.utilisateur.motDePasse }}</td>
                         <td>{{ admin.utilisateur.dateInscription ? admin.utilisateur.dateInscription|date('Y-m-d H:i:s') : '' }}</td>
-                        {% if admin.utilisateur.image is not null %}
-    <td><img src="{{ admin.utilisateur.image }}" alt="Image de profil" width="50" height="50"></td>
-{% else %}
-    <td>No image available</td>
-{% endif %}
+
 
                         <td>{{ admin.departement }}</td>
                         <td>

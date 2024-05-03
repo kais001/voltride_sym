@@ -1,21 +1,29 @@
-{% extends 'login.html.twig' %}
+{% extends 'inscri.html.twig' %}
 
-{% block body %}
-    {% if message %}
-        <p>{{ message }}</p>
-    {% endif %}
+{% block center %}
 
-    <form action="{{ path('app_login') }}" method="post">
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="_username" required>
+
+    <div class="login-container">
+        <form action="{{ path('app_login') }}" method="post" class="login-form">
+            <div class="form-group">
+                <label for="username">Email:</label>
+                <input type="text" id="username" name="_username" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe:</label>
+                <input type="password" id="password" name="_password" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+        
+        <!-- Ajouter le lien "Mot de passe oublié" -->
+        <div class="forgot-password">
+            <a href="{{ path('app_show_password_recovery_form') }}">Mot de passe oublié ?</a>
         </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="_password" required>
+        <div class="inscri">
+            <a href="{{ path('app_utilisateur_new') }}">S'inscrire</a>
         </div>
-        <div>
-            <button type="submit">Login</button>
-        </div>
-    </form>
+    </div>
 {% endblock %}

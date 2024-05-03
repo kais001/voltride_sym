@@ -1,46 +1,12 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
-# Routes for AdminController
-app_admin_index:
-  path: /admin
-  controller: App\Controller\AdminController::index
-  methods: GET
-
-app_admin_new:
-  path: /admin/new
-  controller: App\Controller\AdminController::new
-  methods: ["GET", "POST"]
-
-app_admin_show:
-  path: /admin/{id}
-  controller: App\Controller\AdminController::show
-  methods: GET
-
-app_admin_edit:
-  path: /admin/{id}/edit
-  controller: App\Controller\AdminController::edit
-  methods: ["GET", "POST"]
-
-app_admin_delete:
-  path: /admin/{id}
-  controller: App\Controller\AdminController::delete
-  methods: POST
-
-admin:
-  path: /admin
-  controller: App\Controller\AdminController::index
-
-utilisateur:
-  path: /utilisateur
-  controller: App\Controller\UtilisateurController::index
+app_evenement_stats:
+  path: /evenement/stats/{evenement}
+  controller: App\Controller\EvenementController::statistics
+  methods: ["GET"]
 
 app_login:
   path: /login
   controller: App\Controller\LoginController::login
   methods: ["GET", "POST"]
-# config/routes.yaml
-
-login_check:
-  path: /login_check
-  methods: [POST]
