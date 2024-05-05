@@ -1,0 +1,43 @@
+{% extends 'baseF.html.twig' %}
+
+{% block title %}evenement{% endblock %}
+
+{% block center %}
+<div class="main-container">
+    <div class="white-frame">
+        <div class="table-container">
+            <h1>Borne index</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Addresse</th>
+                        <th>date Evenement</th>
+                        <th>place disponible</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for evenement in evenements %}
+                            <tr>
+                                <td>{{ evenement.type }}</td>
+                                <td>{{ evenement.adresseEvenement }}</td>
+                                <td>{{ evenement.dateEvenement ? evenement.dateEvenement|date('Y-m-d') : '' }}</td>
+                                <td>{{ evenement.placesDispo }}</td>
+                                <td class="button-group">
+                                    <div class="btn-group">
+                                        <form method="post" action="{{ path('app_evenement_delete', {'id_event': evenement.id_event}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ evenement.id_event) }}">
+                                            <a href="{{ path('app_reservation_e_new', {'id_event': evenement.id_event}) }}" class="btn btn-secondary">Réserver</a>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <a href="{{ path('app_reservation_e_index') }}" class="btn btn-secondary">Afficher les réservations</a>
+</div>
+{% endblock %}

@@ -85,9 +85,11 @@ class UtilisateurController extends AbstractController
     public function show(Utilisateur $utilisateur): Response
     {
         return $this->render('utilisateur/show.html.twig', [
-            'utilisateur' => $utilisateur,
+            'utilisateur' => $utilisateur, // Passer l'objet Utilisateur au modèle Twig
         ]);
     }
+    
+
 
 
 

@@ -1,22 +1,32 @@
 <?php
 
 namespace App\Controller;
-use App\Entity\Voiture;
 use Dompdf\Dompdf;
+use App\Entity\Voiture;
+use App\Entity\Utilisateur;
 use App\Entity\ReservationVoiture;
 use App\Form\ReservationVoitureType;
-use App\Repository\ReservationVoitureRepository;
 use App\Repository\VoitureRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\ReservationVoitureRepository;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 #[Route('/reservation/voiture')]
 class ReservationVoitureController extends AbstractController
 {
+    private $session;
+
+    public function __construct(SessionInterface $session)
+    {
+        $this->session = $session;
+    }
+
     #[Route('/', name: 'app_reservation_voiture_indexi', methods: ['GET'])]
     public function index(ReservationVoitureRepository $reservationVoitureRepository): Response
     {
@@ -64,18 +74,33 @@ return $this->render('reservation_voiture/indexi.html.twig', [
     }
     
 
-
     #[Route('/new/{idV}', name: 'app_reservation_voiture_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, int $idV): Response
     {
+        // Récupérer l'ID de l'utilisateur connecté à partir de la session
+        $userId = $this->session->get('user_id');
+
+        // Vérifier si l'utilisateur est connecté
+        if (!$userId) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour effectuer cette action.');
+        }
+
+        // Récupérer l'utilisateur à partir de son ID
+        $user = $entityManager->getRepository(Utilisateur::class)->find($userId);
+
+        // Vérifier si l'utilisateur existe
+        if (!$user) {
+            throw $this->createNotFoundException('L\'utilisateur n\'existe pas.');
+        }
+
         // Récupérer la voiture à partir de l'ID
         $voiture = $entityManager->getRepository(Voiture::class)->find($idV);
-      
 
-        // Créer une nouvelle instance de ReservationVoiture et associer la voiture
+        // Créer une nouvelle instance de ReservationVoiture et associer la voiture et l'utilisateur
         $reservationVoiture = new ReservationVoiture();
         $reservationVoiture->setVoiture($voiture);
-        
+        $reservationVoiture->setUtilisateur($user); // Associer l'utilisateur connecté
+
         // Créer le formulaire
         $form = $this->createForm(ReservationVoitureType::class, $reservationVoiture);
         $form->handleRequest($request);
@@ -87,7 +112,7 @@ return $this->render('reservation_voiture/indexi.html.twig', [
             // Persistez la réservation et la voiture mise à jour
             $entityManager->persist($reservationVoiture);
             $entityManager->flush();
-    
+            
             return $this->redirectToRoute('app_reservation_voiture_index', [], Response::HTTP_SEE_OTHER);
         }
     

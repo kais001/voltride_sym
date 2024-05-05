@@ -3,25 +3,32 @@
 namespace App\Controller;
 
 use App\Entity\Borne;
+use Twilio\Rest\Client;
+use App\Entity\Utilisateur;
+use Twilio\Http\CurlClient;
 use App\Entity\ReservationB;
 use App\Form\ReservationB1Type;
 use App\Repository\BorneRepository;
-use App\Repository\ReservationBRepository;
+use Twilio\Exceptions\TwilioException;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ReservationBRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Twilio\Exceptions\TwilioException;
-use Twilio\Http\CurlClient;
-use Twilio\Rest\Client;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 #[Route('/reservation/b')]
 class ReservationBController extends AbstractController
 {
 
+    private $session;
 
+    public function __construct(SessionInterface $session)
+    {
+        $this->session = $session;
+    }
     #[Route('/', name: 'app_reservation_b_indexi', methods: ['GET'])]
     public function index(ReservationBRepository $reservationBRepository): Response
     {
@@ -58,10 +65,26 @@ class ReservationBController extends AbstractController
         EntityManagerInterface $entityManager,
         int $id
     ): Response {
+        // Récupérer l'ID de l'utilisateur connecté à partir de la session
+        $userId = $this->session->get('user_id');
+
+        // Vérifier si l'utilisateur est connecté
+        if (!$userId) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour effectuer cette action.');
+        }
+
+        // Récupérer l'utilisateur à partir de son ID
+        $user = $entityManager->getRepository(Utilisateur::class)->find($userId);
+
+        // Vérifier si l'utilisateur existe
+        if (!$user) {
+            throw $this->createNotFoundException('L\'utilisateur n\'existe pas.');
+        }
         $borne = $entityManager->getRepository(Borne::class)->find($id);
     
         $reservationB = new ReservationB();
         $reservationB->setBorne($borne);
+        $reservationB->setUtilisateur($user); 
     
         $form = $this->createForm(ReservationB1Type::class, $reservationB);
         $form->handleRequest($request);
@@ -75,7 +98,7 @@ class ReservationBController extends AbstractController
     
                 // Retrieve Twilio credentials and phone number from environment variables
                 $twilioAccountSid = 'ACc51bccccd69cb574e2b382ec326f8651';
-                $twilioAuthToken = 'b7ed1affcfc65eaf92472db422461ec3';
+                $twilioAuthToken = '0c5148d225b4f58fabfe2be3f378daa2';
                 $twilioPhoneNumber = '+15855222234';
                 $recipientPhoneNumber = '+21655695969'; // Replace with recipient's phone number
                 $message = 'Votre réservation (ID: ' . $reservationB->getIdR() . ')' .
